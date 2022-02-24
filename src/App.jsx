@@ -1,8 +1,16 @@
 import styled from "@emotion/styled";
-import { useState, useRef, useCallback, useEffect, useLayoutEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import "./App.css";
+import {getNewRating} from './utils/calculateElo'
+import { Center } from './components/Containers'
+import ResultsOutput from "./components/ResultsOutput";
+
 
 function App() {
+    console.time('LoadTime')
+    useEffect(() => {
+        console.timeEnd('LoadTime')
+    }, [])
     const [counter, setCounter] = useState(0)
     const [opt1, setOpt1] = useState(0);
     const [opt2, setOpt2] = useState(1);
@@ -13,17 +21,6 @@ function App() {
     const [listTitle, setListTitle] = useState('');
     const listTitleInput = useRef()
     const output = useRef();
-
-
-    const Compare = styled("div")({
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-        gap: "2em",
-        "&> button": {
-            padding: "8px 16px",
-            fontSize: "1.25em",
-        },
-    });
 
     const getNewComparison = () => {return Math.floor(Math.random() * data.length)}
 
@@ -44,7 +41,7 @@ function App() {
         setOpt1(newOpt1)
         setOpt2(newOpt2)
         setSortedData(data.sort((a,b)=>{
-            return a.elo - b.elo
+            return b.elo - a.elo 
         }))
         setCounter(counter+1)
         // document.getElementById('1').innerHTML = data[opt1].title
@@ -78,26 +75,7 @@ function App() {
         setListTitle(inputVal)
     }
 
-    const getProbablility = (rAtingCurrent, rAtingCompare) => {
-        return 1.0 * 1.0 / (1 + 1.0 * Math.pow(10, 1.0 * (rAtingCurrent - rAtingCompare) / 200))
-    }
 
-    /*
-        rA = Rating A winner
-        rb = Rating B loser
-    */
-    const getNewRating = (rA, rB) => {
-        const c = 42
-        const Pb = getProbablility(rA, rB)
-        const Pa = getProbablility(rB, rA)
-        let newRatingA;
-        let newRatingB;
-
-        newRatingA = rA + c * (1 - Pa)
-        newRatingB = rB + c * (0 - Pb)
-        console.log(c * (1 - Pa), '|',c * (0 - Pb))
-        return [newRatingA, newRatingB]
-    }
 
     return (
         <>
@@ -107,14 +85,14 @@ function App() {
             <button onClick={newSet}>New set</button>
             <button onClick={loadSet}>Load set</button>
             <h1 style={{ color: "white" }}>What is better? Count: {counter}</h1>
-            <Compare>
+            <Center>
                 <button onClick={(e) => handleWinner(opt1, opt2)} id='1' >
                     {data[opt1].title}
                 </button>
                 <button onClick={(e) => handleWinner(opt2, opt1)} >
                 {data[opt2].title}
                 </button>
-            </Compare>
+            </Center>
             {/* <textarea ref={output} value={sortedData}/>
             <textarea value={sortedData.map((value)=>{
                 return JSON.stringify(value.elo)
@@ -124,6 +102,7 @@ function App() {
                 localStorage.setItem('comparisonData-'+listTitle, JSON.stringify(sortedData))
                 localStorage.setItem('conparisonCount-'+listTitle, counter)
             }}>show results</button>
+            <ResultsOutput data={sortedData}/>
         </>
     );
 }
