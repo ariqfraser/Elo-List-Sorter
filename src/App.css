@@ -1,4 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Marck+Script");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+/* font-family: 'Marck Script', cursive;
+font-family: 'Raleway', sans-serif; */
+
+:root {
+    --primary: #d6ba10;
+    --red: #7c1832;
+    --green: #45df9c;
+    --green2: rgb(53, 162, 114, 0.1);
+    --black: #121317;
+    --black2: #252629;
+    --grey: rgb(163, 163, 163);
+    scroll-behavior: smooth;
+}
+
+::selection {
+    background: #d19a73;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background:  #d6ba10;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5C3E34;
+}
+
 body {
-  margin: 0;
-  background-color: #373737;
+    background-color: var(--black2);
+    margin: 0;
+}
+
+h2 {
+    font-family: "Raleway", sans-serif;
+    color: #fff;
+    font-size: 24px;
+    height: 50px;
+}
+
+h3 {
+    font-family: "Marck Script", cursive;
+    color: #fff;
+    font-size: 5em;
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+}
+
+h4 {
+    font-family: "Marck Script", cursive;
+    color: #fff;
+    font-size: 2.5em;
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+}
+
+p {
+    font-family: inherit;
+    font-weight: 200;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-size: 1.25em;
 }
